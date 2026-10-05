@@ -19,3 +19,7 @@
     <app-albums [albums]="albums" [page]="page"></app-albums>
 }
 
+@if (page === 'songs') {
+    <app-songs [page]="page"></app-songs>
+}
+

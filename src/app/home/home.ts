@@ -3,11 +3,12 @@ import { Component, OnInit } from '@angular/core';
 import { Novify } from '../../services/novify';
 import { Artists } from '../modules/artists/artists';
 import { Albums } from '../modules/albums/albums';
+import { Songs } from '../modules/songs/songs';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, Artists, Albums],
+  imports: [CommonModule, Artists, Albums, Songs],
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })

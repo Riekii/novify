@@ -75,7 +75,7 @@ export class Novify {
   }
 
   getSongs(params: NavidromeQueryParams = {}): Observable<unknown> {
-    return this.request('getSongList2', params);
+    return this.request('search3', params);
   }
 
   getSong(id: string, params: NavidromeQueryParams = {}): Observable<unknown> {
