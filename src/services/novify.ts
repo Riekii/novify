@@ -11,7 +11,7 @@ export class Novify {
   private readonly baseUrl = 'http://192.168.1.214:4533';
   private readonly apiBasePath = '/rest';
 
-  constructor(private readonly http: HttpClient) {}
+  constructor(private readonly http: HttpClient) { }
 
   buildUrl(path: string): string {
     const normalizedBase = this.baseUrl.endsWith('/') ? this.baseUrl.slice(0, -1) : this.baseUrl;
@@ -102,7 +102,25 @@ export class Novify {
     return this.buildUrl(`/rest/stream?id=${encodeURIComponent(id)}`);
   }
 
-  getCoverArt(id: string, size = 300): string {
-    return this.buildUrl(`/rest/getCoverArt?id=${encodeURIComponent(id)}&size=${size}`);
+  getCoverArt(
+    id: string,
+    size = 300
+  ): Observable<Blob> {
+
+    const params = new HttpParams()
+      .set('id', id)
+      .set('size', size);
+
+    return this.http.get(
+      this.buildUrl(`${this.apiBasePath}/getCoverArt`),
+      {
+        params,
+        responseType: 'blob'
+      }
+    );
   }
+
+
+
+
 }

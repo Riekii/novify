@@ -1,4 +1,5 @@
-<div class="card-container">
+<div class="card-container"
+     [style.background-image]="coverArt ? 'url(' + coverArt + ')' : 'none'"
+    >
     <p>{{album?.name}}</p>
-
 </div>
