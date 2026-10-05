@@ -167,3 +167,5 @@ En orden:
 6. Diseño visual.
 
 No complicar la arquitectura prematuramente.
+
+La app está arrancada, no hace falta hacer rebuild, está en un ng serve

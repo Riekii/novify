@@ -1,0 +1,20 @@
+<h1>Novify</h1>
+
+<div class="container">
+    <div class="pestanas">
+    <!-- <button type="button" [ngClass]="page === 'albums' ? 'active' : 'deactive'" (click)="page = 'albums'">Ahora sonando</button> -->
+    <button type="button" [ngClass]="page === 'artists' ? 'active' : 'deactive'" (click)="page = 'artists'">Artistas</button>
+    <button type="button" [ngClass]="page === 'albums' ? 'active' : 'deactive'" (click)="page = 'albums'">Álbumes</button>
+    <button type="button" [ngClass]="page === 'playlists' ? 'active' : 'deactive'" (click)="page = 'playlists'">Playlists</button>
+    </div>
+</div>
+
+
+@if (page === 'artists') {
+    <app-artists></app-artists>
+}
+
+@if (page === 'albums') {
+    <app-albums [albums]="albums" [page]="page"></app-albums>
+}
+

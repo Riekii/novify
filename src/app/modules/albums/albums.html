@@ -1,0 +1,5 @@
+<div class="albums">
+@for (album of albums; track album.id) {
+  <app-card *ngIf="album" [album]="album"></app-card>
+}
+</div>

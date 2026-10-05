@@ -1,0 +1,12 @@
+.container{
+    width: 100%;
+    // background-color: black;
+}
+.pestanas{
+    width: 100%;
+    justify-content: flex-start;
+    align-items: center;
+    display: flex;
+    flex: row;
+    gap: 10px;
+}

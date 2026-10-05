@@ -59,7 +59,7 @@ export class Novify {
   }
 
   getArtists(params: NavidromeQueryParams = {}): Observable<unknown> {
-    return this.request('getArtistList2', params);
+    return this.request('getArtistList2', { type: 'alphabetic', ...params });
   }
 
   getArtist(id: string, params: NavidromeQueryParams = {}): Observable<unknown> {
@@ -67,7 +67,7 @@ export class Novify {
   }
 
   getAlbums(params: NavidromeQueryParams = {}): Observable<unknown> {
-    return this.request('getAlbumList2', params);
+    return this.request('getAlbumList2', { type: 'alphabeticalByName', ...params });
   }
 
   getAlbum(id: string, params: NavidromeQueryParams = {}): Observable<unknown> {
