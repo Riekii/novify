@@ -31,6 +31,7 @@ export class Card implements OnChanges {
     this.novify.getCoverArt(this.album?.coverArt ?? '', 3000).subscribe((coverArt) => {
       this.coverArt = URL.createObjectURL(coverArt);
       this.cdr.detectChanges();
+
     });
   }
 
@@ -47,6 +48,7 @@ export class Card implements OnChanges {
         rootMargin: '200px'
       }
     );
+      this.cdr.detectChanges();
 
     this.observer.observe(this.element.nativeElement);
   }
