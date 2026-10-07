@@ -28,11 +28,20 @@ div.detail-container {
   .detail-content-container{
     background-color: black;
     outline: solid 1px var(--line);
-    width: 90vw;
-    height: 85vh;
+    width: min(90vw, 775px);
+    aspect-ratio: 1 / 1;
+    max-height: 85vh;
+    height: auto;
+    box-sizing: border-box;
+  }
 
-    max-width: 775px;
-
+  @media (max-width: 768px) {
+    .detail-content-container {
+      width: min(92vw, 100%);
+      max-width: none;
+      aspect-ratio: auto;
+      height: 80vh;
+    }
   }
 
   .cover{
@@ -51,7 +60,7 @@ div.detail-container {
   .songList{
     background-color: rgba(0, 0, 0, 0.808);
     width: 100%;
-    height: 80%;
+    height: 60%;
     overflow: auto;
 
     .song{

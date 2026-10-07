@@ -4,11 +4,12 @@ import { Novify } from '../../services/novify';
 import { Artists } from '../modules/artists/artists';
 import { Albums } from '../modules/albums/albums';
 import { Songs } from '../modules/songs/songs';
+import { Playing } from '../shared/playing/playing';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, Artists, Albums, Songs],
+  imports: [CommonModule, Artists, Albums, Songs, Playing],
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })
