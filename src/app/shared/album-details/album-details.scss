@@ -15,7 +15,7 @@ div.detail-container {
     position: absolute;
     padding-left: 20px;
     padding-top: -5px;
-    font-size: 3em;
+    font-size: 2em;
     color: var(--line);
     cursor: pointer;
     margin-top: -8px;
@@ -27,7 +27,7 @@ div.detail-container {
 
   .detail-content-container{
     background-color: black;
-    border: solid 1px var(--line);
+    outline: solid 1px var(--line);
     width: 90vw;
     height: 85vh;
 
@@ -47,5 +47,13 @@ div.detail-container {
     background-color: rgba(0, 0, 0, 0.808);
     width: 100%;
     height: 100%;
+  }
+
+  .title{
+    background-color: rgba(0, 0, 0, 0.87);
+    font-size: 1.4em;
+    padding-left: 50px;
+    padding-top: 2px;
+    padding-bottom: 3px;
   }
 }

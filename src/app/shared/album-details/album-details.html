@@ -3,6 +3,9 @@
     <div class="detail-content-container">
         <div (click)="close.emit(!close)" class="close">x</div>
         <div class="cover" [style.background-image]="coverArt ? 'url(' + coverArt + ')' : 'none'">
+
+            <div class="title">{{album?.name}} - {{album?.artist}}</div>
+
             <div class="songList">
                 <div class="song" *ngFor="let song of album?.songs">
                     <p class="name">{{song.name}}</p>

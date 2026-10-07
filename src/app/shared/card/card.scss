@@ -10,14 +10,22 @@
 
     cursor: pointer;
 
-    animation: ease-in-out all 0.1s;
+    animation: ease-in-out all 0.4s;
+    transition: ease-in-out all 0.1s;
+
+    box-shadow: 0 0 8px rgba(126, 247, 176, 0.25),
+                0 0 16px rgba(126, 247, 176, 0.25),
+                0 0 32px rgba(126, 247, 176, 0.25);
+
     margin: 1vh;
 
     &:hover {
-        width: 21vh;
-        height: 21vh;
-
-        margin: 0vh;
+        border-color: white;
+        outline: solid 4px var(--line);+
+        
+        .name{
+            color: white;
+        }
     }
 
     .name{

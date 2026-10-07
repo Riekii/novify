@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Novify } from '../../../services/novify';
 
 @Component({
   selector: 'app-album-details',
@@ -12,6 +13,10 @@ export class AlbumDetails implements OnInit {
   @Input() coverArt?: any;
 
   @Output() close = new EventEmitter<boolean>(false);
+
+  constructor(
+    private novify: Novify
+  ) {}
 
   ngOnInit(): void {
     console.log(this.album);
