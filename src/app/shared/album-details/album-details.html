@@ -1,0 +1,17 @@
+<div class="detail-container">
+
+    <div class="detail-content-container">
+        <div (click)="close.emit(!close)" class="close">x</div>
+        <div class="cover" [style.background-image]="coverArt ? 'url(' + coverArt + ')' : 'none'">
+            <div class="songList">
+                <div class="song" *ngFor="let song of album?.songs">
+                    <p class="name">{{song.name}}</p>
+                    <p class="duration">{{song.duration}}</p>
+                </div>
+            </div>
+
+        </div>
+
+        
+    </div>
+</div>

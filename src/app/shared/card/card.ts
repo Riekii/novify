@@ -2,11 +2,12 @@ import { ChangeDetectorRef, Component, ElementRef, Input, OnChanges, SimpleChang
 import { Album } from '../../interfaces/album';
 import { Novify } from '../../../services/novify';
 import { CommonModule } from '@angular/common';
+import { AlbumDetails } from '../album-details/album-details';
 
 @Component({
   selector: 'app-card',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, AlbumDetails],
   templateUrl: './card.html',
   styleUrl: './card.scss',
 })
@@ -15,6 +16,7 @@ export class Card implements OnChanges {
 
   public coverArt?: any;
   private observer?: IntersectionObserver;
+  public showAlbumDetailsActive: boolean = false;
 
   constructor(
     public novify: Novify,
@@ -51,5 +53,9 @@ export class Card implements OnChanges {
       this.cdr.detectChanges();
 
     this.observer.observe(this.element.nativeElement);
+  }
+
+  showAlbumDetails(): void {
+    this.showAlbumDetailsActive = !this.showAlbumDetailsActive;
   }
 }

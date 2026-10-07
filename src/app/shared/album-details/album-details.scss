@@ -1,0 +1,51 @@
+div.detail-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+
+  
+  .close{
+    position: absolute;
+    padding-left: 20px;
+    padding-top: -5px;
+    font-size: 3em;
+    color: var(--line);
+    cursor: pointer;
+    margin-top: -8px;
+
+    &:hover{
+      color: var(--secondary);
+    }
+  }
+
+  .detail-content-container{
+    background-color: black;
+    border: solid 1px var(--line);
+    width: 90vw;
+    height: 85vh;
+
+    max-width: 775px;
+
+  }
+
+  .cover{
+    width: 100%;
+    height: 100%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: top;
+  }
+
+  .songList{
+    background-color: rgba(0, 0, 0, 0.808);
+    width: 100%;
+    height: 100%;
+  }
+}

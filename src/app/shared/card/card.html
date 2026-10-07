@@ -1,5 +1,10 @@
 <div class="card-container"
      [style.background-image]="coverArt ? 'url(' + coverArt + ')' : 'none'"
+     (click)="showAlbumDetails()"
     >
     <p class="name">{{album?.name}}</p>
 </div>
+
+@if(showAlbumDetailsActive) {
+    <app-album-details [album]="album" [coverArt]="coverArt" (close)="this.showAlbumDetailsActive = false"></app-album-details>
+}

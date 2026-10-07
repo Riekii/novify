@@ -8,6 +8,18 @@
     background-position: center;
     background-repeat: no-repeat;
 
+    cursor: pointer;
+
+    animation: ease-in-out all 0.1s;
+    margin: 1vh;
+
+    &:hover {
+        width: 21vh;
+        height: 21vh;
+
+        margin: 0vh;
+    }
+
     .name{
         background-color: rgba(0, 0, 0, 0.674);
         width: 100%;
@@ -15,4 +27,6 @@
         margin-top: 0;
         padding: 2px 3px;
     }
+
+
 }
