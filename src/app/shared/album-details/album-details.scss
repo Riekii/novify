@@ -41,12 +41,37 @@ div.detail-container {
     background-size: contain;
     background-repeat: no-repeat;
     background-position: top;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
   }
 
   .songList{
     background-color: rgba(0, 0, 0, 0.808);
     width: 100%;
-    height: 100%;
+    height: 80%;
+    overflow: auto;
+
+    .song{
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 10px;
+      border: solid 1px var(--line);
+      height: 40px;
+      
+      p.name{
+        margin: 0;
+        padding: 0;
+      }
+
+      button.play{
+        padding-right: 4px;
+      }
+    }
   }
 
   .title{

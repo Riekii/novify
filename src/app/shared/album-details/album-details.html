@@ -7,8 +7,9 @@
             <div class="title">{{album?.name}} - {{album?.artist}}</div>
 
             <div class="songList">
-                <div class="song" *ngFor="let song of album?.songs">
-                    <p class="name">{{song.name}}</p>
+                <div class="song" *ngFor="let song of songs">
+                    <button class="play" (click)="playSong(song)">▶</button>
+                    <p class="name">{{song.title}}</p>
                     <p class="duration">{{song.duration}}</p>
                 </div>
             </div>
