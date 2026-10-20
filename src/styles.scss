@@ -81,3 +81,24 @@ app-root {
   padding: 1rem;
 }
 
+/* Ancho de la barra */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Fondo de la barra */
+::-webkit-scrollbar-track {
+  background: #1e1e1e;
+}
+
+/* Parte que se mueve */
+::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: 0px;
+}
+
+/* Al pasar el ratón */
+::-webkit-scrollbar-thumb:hover {
+  background: #999;
+}
+
