@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { Novify } from '../../../services/novify';
-import { AudioService } from '../../../services/audio.service';
+import { AudioService, AudioState } from '../../../services/audio.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-album-details',
@@ -14,15 +15,21 @@ export class AlbumDetails implements OnChanges {
   @Input() album?: any;
   @Input() coverArt?: any;
 
+  audioState$: Observable<AudioState>;
+
+
   @Output() close = new EventEmitter<boolean>();
 
   public songs: any[] = [];
+  public state: any;
 
   constructor(
     private readonly novify: Novify,
     private readonly cdr: ChangeDetectorRef,
-    private readonly audioService: AudioService,
-  ) {}
+    private readonly audioService: AudioService) {
+    this.audioState$ = this.audioService.getState();
+    this.state = this.audioService.getCurrentState();
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['album'] && this.album?.id) {
@@ -61,13 +68,23 @@ export class AlbumDetails implements OnChanges {
 
   playSong(song: any): void {
     let url = this.novify.getStreamUrl(song.id);
-    
-    if (url) {
-      console.log('Playing URL:', url);
-      console.log('Song:', song);
-      this.audioService.play(song, url);
-    } else {
-      console.error('No URL found for song', song);
+    this.state = this.audioService.getCurrentState();
+    if (!this.state || !this.state.currentSong || this.state.isPlaying === false || this.state.currentSong.id !== song.id) {
+      if (url) {
+        this.audioService.play(song, url);
+      } else {
+        console.error('No URL found for song', song);
+      }
     }
+    else {
+      this.audioService.pause();
+    }
+
+    this.state = this.audioService.getCurrentState();
+    this.cdr.detectChanges();
+    console.log('Current state:', this.state);
+
+
+
   }
 }

@@ -8,7 +8,8 @@
 
             <div class="songList">
                 <div class="song" *ngFor="let song of songs">
-                    <button class="play" (click)="playSong(song)">▶</button>
+                    
+                    <button class="play" (click)="playSong(song)">{{(audioState$ | async)?.isPlaying && (audioState$ | async)?.currentSong?.id === song.id ? '⏸' : '▶'}}</button>
                     <p class="name">{{song.title}}</p>
                     <p class="duration">{{song.duration}}</p>
                 </div>
