@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { Novify } from '../../../services/novify';
+import { AudioService } from '../../../services/audio.service';
 
 @Component({
   selector: 'app-album-details',
@@ -20,6 +21,7 @@ export class AlbumDetails implements OnChanges {
   constructor(
     private readonly novify: Novify,
     private readonly cdr: ChangeDetectorRef,
+    private readonly audioService: AudioService,
   ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -58,6 +60,14 @@ export class AlbumDetails implements OnChanges {
   }
 
   playSong(song: any): void {
-    console.log('Playing song:', song);
+    let url = this.novify.getStreamUrl(song.id);
+    
+    if (url) {
+      console.log('Playing URL:', url);
+      console.log('Song:', song);
+      this.audioService.play(song, url);
+    } else {
+      console.error('No URL found for song', song);
+    }
   }
 }

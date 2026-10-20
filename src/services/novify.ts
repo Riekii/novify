@@ -10,6 +10,8 @@ export type NavidromeQueryParams = Record<string, string | number | boolean | nu
 export class Novify {
   private readonly baseUrl = 'http://192.168.1.214:4533';
   private readonly apiBasePath = '/rest';
+  private readonly username = 'rieki';
+  private readonly password = 'peneman21';
 
   constructor(private readonly http: HttpClient) { }
 
@@ -98,8 +100,16 @@ export class Novify {
     return this.request('search3', { ...params, query });
   }
 
-  getStreamUrl(id: string): string {
-    return this.buildUrl(`/rest/stream?id=${encodeURIComponent(id)}`);
+  getStreamUrl(id: string, params: NavidromeQueryParams = {}): string {
+    const query = new URLSearchParams({
+      id,
+      u: this.username,
+      p: this.password,
+      c: 'novify',
+      v: '1.16.1',
+      ...params,
+    }).toString();
+    return `${this.buildUrl('/rest/stream')}?${query}`;
   }
 
   getCoverArt(
