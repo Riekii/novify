@@ -102,6 +102,14 @@ export class Novify {
     return this.request('getPlaylist', { ...params, id });
   }
 
+  createPlaylist(name: string): Observable<unknown> {
+    return this.request('createPlaylist', { name });
+  }
+
+  addSongToPlaylist(playlistId: string, songId: string): Observable<unknown> {
+    return this.request('updatePlaylist', { playlistId, songIdToAdd: songId });
+  }
+
   search(query: string, params: NavidromeQueryParams = {}): Observable<unknown> {
     return this.request('search3', { ...params, query });
   }

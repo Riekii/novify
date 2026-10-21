@@ -1,5 +1,5 @@
 div.songs {
-    --song-columns: 44px minmax(0, 3fr) minmax(0, 2fr) minmax(0, 2fr) 230px 60px;
+    --song-columns: 44px minmax(0, 3fr) minmax(0, 2fr) minmax(0, 2fr) 230px 60px 40px;
 
     width: 100%;
     padding: 10px;
@@ -39,6 +39,19 @@ div.songs {
 
     .sentinel {
         height: 1px;
+    }
+
+    .toast {
+        position: fixed;
+        left: 50%;
+        bottom: 90px;
+        transform: translateX(-50%);
+        z-index: 2000;
+        margin: 0;
+        padding: 10px 16px;
+        background: black;
+        border: solid 1px var(--line);
+        color: var(--secondary);
     }
 
     @media (max-width: 768px) {

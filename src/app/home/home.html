@@ -22,5 +22,9 @@
     <app-songs [page]="page"></app-songs>
 }
 
+@if (page === 'playlists') {
+    <app-playlist></app-playlist>
+}
+
 <app-playing></app-playing>
 

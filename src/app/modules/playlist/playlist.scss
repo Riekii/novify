@@ -1,0 +1,86 @@
+div.playlists {
+    width: 100%;
+    padding: 10px;
+    margin-top: 20px;
+    margin-bottom: 80px;
+    box-sizing: border-box;
+
+    .create {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 10px;
+
+        input {
+            flex: 1;
+            min-width: 0;
+            padding: 10px;
+            background: black;
+            color: inherit;
+            border: solid 1px var(--line);
+        }
+
+        button {
+            padding: 0 16px;
+            cursor: pointer;
+        }
+    }
+
+    .item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+        padding: 12px 10px;
+        border: solid 1px var(--line);
+        border-top: none;
+        background: transparent;
+        color: inherit;
+        text-align: left;
+        cursor: pointer;
+
+        &:first-of-type {
+            border-top: solid 1px var(--line);
+        }
+
+        &:hover {
+            color: var(--secondary);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .name {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .count {
+            flex-shrink: 0;
+            font-size: 0.85em;
+            opacity: 0.7;
+        }
+    }
+
+    .detail-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 10px;
+
+        h2 {
+            margin: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        button {
+            cursor: pointer;
+        }
+    }
+
+    .status {
+        text-align: center;
+        padding: 10px;
+    }
+}

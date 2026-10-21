@@ -1,10 +1,11 @@
 :host {
     display: block;
+    position: relative;
 }
 
 .song {
     display: grid;
-    grid-template-columns: var(--song-columns, 44px minmax(0, 3fr) minmax(0, 2fr) minmax(0, 2fr) 230px 60px);
+    grid-template-columns: var(--song-columns, 44px minmax(0, 3fr) minmax(0, 2fr) minmax(0, 2fr) 230px 60px 40px);
     align-items: center;
     gap: 12px;
     padding: 6px 10px;
@@ -41,16 +42,63 @@
         }
     }
 
+    .col-add {
+        position: relative;
+
+        button.add {
+            padding: 6px;
+            border: none;
+            background: rgba(0, 0, 0, 0.233);
+            cursor: pointer;
+            color: inherit;
+
+            &:hover {
+                color: var(--secondary);
+            }
+        }
+
+        ul.menu {
+            position: absolute;
+            right: 0;
+            top: 100%;
+            z-index: 10;
+            margin: 4px 0 0;
+            padding: 0;
+            list-style: none;
+            min-width: 180px;
+            max-height: 240px;
+            overflow-y: auto;
+            background: black;
+            border: solid 1px var(--line);
+
+            button {
+                width: 100%;
+                padding: 8px 10px;
+                text-align: left;
+                border: none;
+                background: transparent;
+                color: inherit;
+                cursor: pointer;
+
+                &:hover {
+                    color: var(--secondary);
+                    background: rgba(255, 255, 255, 0.08);
+                }
+            }
+        }
+    }
+
     @media (max-width: 768px) {
-        grid-template-columns: 44px minmax(0, 1fr) minmax(0, 1fr) auto;
+        grid-template-columns: 44px minmax(0, 1fr) minmax(0, 1fr) auto 40px;
         grid-template-areas:
-            'play title title duration'
-            'play artist album duration'
-            'play format format duration';
+            'play title title duration add'
+            'play artist album duration add'
+            'play format format duration add';
         column-gap: 10px;
         row-gap: 2px;
         padding: 8px;
 
+        .col-add { grid-area: add; align-self: center; }
         .col-play {
             grid-area: play;
             align-self: stretch;

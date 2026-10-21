@@ -12,5 +12,19 @@
             @if (s.size) { · {{ formatSize(s.size) }} }
         </span>
         <span class="col-duration">{{ formatDuration(s.duration) }}</span>
+        @if (playlists().length) {
+            <div class="col-add">
+                <button type="button" class="add" title="Añadir a playlist" (click)="menuOpen.set(!menuOpen())">
+                    <fa-icon [icon]="faPlus" />
+                </button>
+                @if (menuOpen()) {
+                    <ul class="menu">
+                        @for (p of playlists(); track p.id) {
+                            <li><button type="button" (click)="selectPlaylist(p.id)">{{ p.name }}</button></li>
+                        }
+                    </ul>
+                }
+            </div>
+        }
     </div>
 }

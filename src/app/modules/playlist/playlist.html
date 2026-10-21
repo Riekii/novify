@@ -1,0 +1,44 @@
+<div class="playlists">
+    @if (!selected) {
+        <form class="create" (submit)="$event.preventDefault(); createPlaylist()">
+            <input
+                type="text"
+                placeholder="Nombre de la nueva playlist"
+                [value]="newName"
+                (input)="newName = $any($event.target).value" />
+            <button type="submit" [disabled]="!newName.trim()">Crear</button>
+        </form>
+
+        @for (p of playlists; track p.id) {
+            <button type="button" class="item" (click)="open(p)">
+                <span class="name">{{ p.name }}</span>
+                <span class="count">{{ p.songCount }} canciones</span>
+            </button>
+        } @empty {
+            <p class="status">No hay playlists todavía.</p>
+        }
+    } @else {
+        <div class="detail-header">
+            <button type="button" (click)="back()">← Volver</button>
+            <h2>{{ selected.name }}</h2>
+        </div>
+
+        @let state = audioState$ | async;
+        @for (song of songs; track $index) {
+            @let isCurrent = state?.currentSong?.id === song.id;
+            <app-song
+                [song]="song"
+                [isCurrent]="isCurrent"
+                [isPlaying]="isCurrent && !!state?.isPlaying"
+                [currentTime]="isCurrent ? (state?.currentTime ?? 0) : 0"
+                [duration]="isCurrent ? (state?.duration ?? 0) : 0"
+                (play)="playSong($event)" />
+        }
+
+        @if (loading) {
+            <p class="status">Cargando...</p>
+        } @else if (songs.length === 0) {
+            <p class="status">Esta playlist está vacía. Añade canciones desde la pestaña Canciones.</p>
+        }
+    }
+</div>

@@ -28,8 +28,11 @@ export class Songs implements OnInit, OnDestroy {
   public loading = false;
   public audioState$: Observable<AudioState>;
   public isMobile = window.innerWidth <= 500;
+  public playlists: any[] = [];
+  public message = '';
 
   private readonly pageSize = 50;
+  private messageTimer?: ReturnType<typeof setTimeout>;
   private hasMore = true;
   private requestId = 0;
   private observer?: IntersectionObserver;
@@ -56,6 +59,7 @@ export class Songs implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.loadPlaylists();
     this.searchSub = this.search$
       .pipe(debounceTime(300), distinctUntilChanged())
       .subscribe((value) => this.resetAndLoad(value));
@@ -64,6 +68,39 @@ export class Songs implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.observer?.disconnect();
     this.searchSub?.unsubscribe();
+    clearTimeout(this.messageTimer);
+  }
+
+  private loadPlaylists(): void {
+    this.novify.getPlaylists().subscribe({
+      next: (data: any) => {
+        const raw = data?.['subsonic-response']?.playlists?.playlist ?? [];
+        this.playlists = Array.isArray(raw) ? raw : [raw];
+        this.cdr.detectChanges();
+      },
+      error: () => console.error('No se pudieron cargar las playlists.'),
+    });
+  }
+
+  addToPlaylist(song: any, playlistId: string): void {
+    const playlist = this.playlists.find((p) => p.id === playlistId);
+    this.novify.addSongToPlaylist(playlistId, song.id).subscribe({
+      next: (data: any) => {
+        const ok = data?.['subsonic-response']?.status === 'ok';
+        this.showMessage(ok ? `"${song.title}" añadida a ${playlist?.name}` : 'No se pudo añadir la canción.');
+      },
+      error: () => this.showMessage('No se pudo añadir la canción.'),
+    });
+  }
+
+  private showMessage(text: string): void {
+    this.message = text;
+    this.cdr.detectChanges();
+    clearTimeout(this.messageTimer);
+    this.messageTimer = setTimeout(() => {
+      this.message = '';
+      this.cdr.detectChanges();
+    }, 3000);
   }
 
   onSearch(value: string): void {
