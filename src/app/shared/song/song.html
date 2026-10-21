@@ -1,1 +1,16 @@
-<p>song works!</p>
+@if (song(); as s) {
+    <div class="song" [class.active]="isCurrent()" [style.--progress]="progress() + '%'">
+        <button class="col-play" type="button" (click)="play.emit(s)">
+            <fa-icon [icon]="isCurrent() && isPlaying() ? faPause : faPlay" />
+        </button>
+        <span class="col-title" [title]="s.title">{{ s.title }}</span>
+        <span class="col-artist" [title]="s.artist">{{ s.artist }}</span>
+        <span class="col-album" *ngIf="!isMobile()" [title]="s.album">{{ s.album }}</span>
+        <span class="col-format">
+            {{ s.suffix | uppercase }}
+            @if (s.bitRate) { · {{ s.bitRate }} kbps }
+            @if (s.size) { · {{ formatSize(s.size) }} }
+        </span>
+        <span class="col-duration">{{ formatDuration(s.duration) }}</span>
+    </div>
+}

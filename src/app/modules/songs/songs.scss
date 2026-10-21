@@ -1,0 +1,49 @@
+div.songs {
+    --song-columns: 44px minmax(0, 3fr) minmax(0, 2fr) minmax(0, 2fr) 230px 60px;
+
+    width: 100%;
+    padding: 10px;
+    margin-top: 20px;
+    margin-bottom: 80px;
+    box-sizing: border-box;
+
+    input.search {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        box-sizing: border-box;
+        background: black;
+        color: inherit;
+        border: solid 1px var(--line);
+    }
+
+    .header {
+        display: grid;
+        grid-template-columns: var(--song-columns);
+        align-items: center;
+        gap: 12px;
+        padding: 6px 10px;
+        box-sizing: border-box;
+        border: solid 1px var(--line);
+        font-weight: bold;
+
+        .col-duration {
+            text-align: right;
+        }
+    }
+
+    .status {
+        text-align: center;
+        padding: 10px;
+    }
+
+    .sentinel {
+        height: 1px;
+    }
+
+    @media (max-width: 768px) {
+        .header {
+            display: none;
+        }
+    }
+}

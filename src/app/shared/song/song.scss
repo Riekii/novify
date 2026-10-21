@@ -1,0 +1,59 @@
+:host {
+    display: block;
+}
+
+.song {
+    display: grid;
+    grid-template-columns: var(--song-columns, 44px minmax(0, 3fr) minmax(0, 2fr) minmax(0, 2fr) 230px 60px);
+    align-items: center;
+    gap: 12px;
+    padding: 6px 10px;
+    min-height: 44px;
+    box-sizing: border-box;
+    border: solid 1px var(--line);
+    border-top: none;
+    background: linear-gradient(to right, rgba(29, 185, 84, 0.45) var(--progress, 0%), transparent var(--progress, 0%));
+
+    &.active {
+        color: var(--secondary);
+    }
+
+    span {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .col-duration {
+        text-align: right;
+    }
+
+    button.col-play {
+        padding: 4px 0;
+        border: none;
+        background: rgba(0, 0, 0, 0.233);
+        cursor: pointer;
+
+        &:hover {
+            background: rgba(0, 0, 0, 0.5);
+            color: var(--secondary);
+        }
+    }
+
+    @media (max-width: 768px) {
+        grid-template-columns: 44px minmax(0, 1fr) 50px;
+        grid-template-areas:
+            'play title duration'
+            'play artist duration'
+            'play album duration'
+            'play format duration';
+        row-gap: 2px;
+
+        .col-play { grid-area: play; }
+        .col-title { grid-area: title; }
+        .col-artist { grid-area: artist; font-size: 0.85em; }
+        .col-album { grid-area: album; font-size: 0.85em; }
+        .col-format { grid-area: format; font-size: 0.75em; }
+        .col-duration { grid-area: duration; }
+    }
+}
