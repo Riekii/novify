@@ -84,6 +84,10 @@ export class Novify {
     return this.request('getSong', { ...params, id });
   }
 
+  getRandomSongs(params: NavidromeQueryParams = {}): Observable<unknown> {
+    return this.request('getRandomSongs', { size: 1, ...params });
+  }
+
   getGenres(params: NavidromeQueryParams = {}): Observable<unknown> {
     return this.request('getGenres', params);
   }

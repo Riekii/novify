@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 export interface AudioState {
   isPlaying: boolean;
@@ -19,6 +19,8 @@ export class AudioService {
     duration: 0,
     currentSong: null,
   });
+
+  private songEnded$ = new Subject<void>();
 
   constructor() {
     this.audio = new Audio();
@@ -59,6 +61,7 @@ export class AudioService {
         isPlaying: false,
         currentTime: 0,
       });
+      this.songEnded$.next();
     });
 
     this.audio.addEventListener('error', (e) => {
@@ -99,5 +102,9 @@ export class AudioService {
 
   getCurrentState(): AudioState {
     return this.audioState$.value;
+  }
+
+  onSongEnded(): Observable<void> {
+    return this.songEnded$.asObservable();
   }
 }

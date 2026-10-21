@@ -9,6 +9,10 @@
           *ngIf="!(audioState$ | async)?.isPlaying || (audioState$ | async)?.currentSong?.id !== state.currentSong?.id"
           [icon]="faPlay" />
       </button>
+
+      <button (click)="playRandomSong()" class="play-btn forward-btn">
+        <fa-icon [icon]="faForward"></fa-icon>
+      </button>
     </div>
 
     <div class="song-info">

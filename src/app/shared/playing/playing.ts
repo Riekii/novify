@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AudioService, AudioState } from '../../../services/audio.service';
-import { Observable } from 'rxjs';
+import { Novify } from '../../../services/novify';
+import { Observable, Subscription } from 'rxjs';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { faPause, faPlay, faStop } from '@fortawesome/free-solid-svg-icons';
+import { faPause, faPlay, faStop, faForward, faBackward } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-playing',
@@ -12,18 +13,44 @@ import { faPause, faPlay, faStop } from '@fortawesome/free-solid-svg-icons';
   templateUrl: './playing.html',
   styleUrl: './playing.scss',
 })
-export class Playing implements OnInit {
+export class Playing implements OnInit, OnDestroy {
   audioState$: Observable<AudioState>;
+  private endedSub?: Subscription;
 
   faPlay = faPlay;
   faPause = faPause;
   faStop = faStop;
+  faForward = faForward;
+  faBackward = faBackward;
 
-  constructor(private readonly audioService: AudioService) {
+  constructor(
+    private readonly audioService: AudioService,
+    private readonly novify: Novify
+  ) {
     this.audioState$ = this.audioService.getState();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.endedSub = this.audioService.onSongEnded().subscribe(() => this.playRandomSong());
+  }
+
+  ngOnDestroy(): void {
+    this.endedSub?.unsubscribe();
+  }
+
+  public playRandomSong(): void {
+    this.novify.getRandomSongs({ size: 1 }).subscribe({
+      next: (data: any) => {
+        const raw = data?.['subsonic-response']?.randomSongs?.song ?? [];
+        const song = Array.isArray(raw) ? raw[0] : raw;
+        if (!song?.id) {
+          return;
+        }
+        this.audioService.play(song, this.novify.getStreamUrl(song.id));
+      },
+      error: () => console.error('No se pudo cargar una canción aleatoria.'),
+    });
+  }
 
   togglePlayPause(): void {
     const state = this.audioService.getCurrentState();
