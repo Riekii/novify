@@ -9,10 +9,14 @@ input {
   &:hover {
     background: var(--line);
     color: var(--bg);
+
+
   }
 
   &.active {
-    background: var(--primary);
-    color: var(--bg);
+    @media (min-width: 500px) {
+      background: var(--primary);
+      color: var(--bg);
+    }
   }
 }

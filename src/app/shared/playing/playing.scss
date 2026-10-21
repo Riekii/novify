@@ -77,7 +77,15 @@
   transition: background-color 0.2s;
 
   &:hover {
-    background-color: #1ed760;
+    @media (min-width: 500px) {
+      background-color: #1ed760;
+    }
+  }
+
+  &:active {
+    @media (min-width: 500px) {
+      background-color: #1ed760;
+    }
   }
 }
 
@@ -87,6 +95,7 @@
   gap: 10px;
   flex: 2;
   min-width: 200px;
+
   @media (max-width: 500px) {
     min-width: 99%;
   }
