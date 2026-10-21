@@ -21,7 +21,6 @@ export const navidromeInterceptor: HttpInterceptorFn = (req, next) => {
     },
   });
 
-  console.warn(NAVIDROME_BASE_URL, req.url, req.url.startsWith(NAVIDROME_BASE_URL), req.params.has('u'), cloned);
   if (!req.url.startsWith(NAVIDROME_BASE_URL) || req.params.has('u')) {
     return next(req);
   }

@@ -19,14 +19,18 @@
   color: white;
   font-family: Arial, sans-serif;
 
-      @media (max-width: 500px) {
-      min-height: 2000px;
-    }
+  @media (max-width: 500px) {
+    flex-direction: column;
+  }
 }
 
 .song-info {
   flex: 1;
   min-width: 0;
+
+  @media (max-width: 500px) {
+    text-align: center;
+  }
 
   h3 {
     margin: 0;
@@ -83,6 +87,9 @@
   gap: 10px;
   flex: 2;
   min-width: 200px;
+  @media (max-width: 500px) {
+    min-width: 99%;
+  }
 }
 
 .time {
