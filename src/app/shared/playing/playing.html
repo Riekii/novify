@@ -1,10 +1,5 @@
 <div class="playing-container" *ngIf="audioState$ | async as state">
   <div class="player-card" *ngIf="state.currentSong">
-    <div class="song-info">
-      <h3>{{ state.currentSong.title }}</h3>
-      <p>{{ state.currentSong.artist || 'Artista desconocido' }}</p>
-    </div>
-
     <div class="controls">
       <button (click)="togglePlayPause()" class="play-btn">
         <fa-icon
@@ -15,6 +10,13 @@
           [icon]="faPlay" />
       </button>
     </div>
+
+    <div class="song-info">
+      <h3>{{ state.currentSong.title }}</h3>
+      <p>{{ state.currentSong.artist || 'Artista desconocido' }}</p>
+    </div>
+
+
 
     <div class="progress-section">
       <span class="time">{{ formatTime(state.currentTime) }}</span>

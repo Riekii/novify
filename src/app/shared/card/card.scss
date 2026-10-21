@@ -1,7 +1,7 @@
 .card-container {
     display: block;
     border: solid 1px var(--line);
-    width: 20vh;
+    width: 18vh;
     height: 20vh;
 
     background-size: cover;
@@ -17,7 +17,6 @@
                 0 0 16px rgba(126, 247, 176, 0.25),
                 0 0 32px rgba(126, 247, 176, 0.25);
 
-    margin: 1vh;
 
     &:hover {
         border-color: white;

@@ -95,7 +95,7 @@
 .progress-bar {
   flex: 1;
   height: 4px;
-  border-radius: 2px;
+  border-radius: 0;
   -webkit-appearance: none;
   appearance: none;
   background: linear-gradient(to right, #1db954 0%, #1db954 var(--progress), #333 var(--progress), #333 100%);

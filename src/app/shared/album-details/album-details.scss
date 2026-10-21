@@ -28,20 +28,9 @@ div.detail-container {
   .detail-content-container{
     background-color: black;
     outline: solid 1px var(--line);
-    width: min(90vw, 775px);
+    width: min(70vh, 92vw);
     aspect-ratio: 1 / 1;
-    max-height: 85vh;
-    height: auto;
     box-sizing: border-box;
-  }
-
-  @media (max-width: 768px) {
-    .detail-content-container {
-      width: min(92vw, 100%);
-      max-width: none;
-      aspect-ratio: auto;
-      height: 80vh;
-    }
   }
 
   .cover{
@@ -60,7 +49,7 @@ div.detail-container {
   .songList{
     background-color: rgba(0, 0, 0, 0.808);
     width: 100%;
-    height: 60%;
+    height: 100%;
     overflow: auto;
 
     .song{
@@ -82,12 +71,19 @@ div.detail-container {
         display: flex;
         flex-direction: row;
         align-items: center;
+        border: none;
+        background: rgba(0, 0, 0, 0.233);
+
+        &:hover{
+          background: rgba(0, 0, 0, 0.5);
+          color: var(--secondary);
+        }
       }
     }
   }
 
   .title{
-    background-color: rgba(0, 0, 0, 0.87);
+    background-color: rgba(0, 0, 0, 0.979);
     font-size: 1.4em;
     padding-left: 50px;
     padding-top: 2px;
