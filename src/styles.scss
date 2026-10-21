@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
-@import './scss/buttons';
 
 :root {
   --bg: #050b08;
@@ -8,7 +7,11 @@
   --primary: #00e05d;
   --text: #d8ffe5;
   --muted: #8bb89d;
+
+  --mobile: 600px;
 }
+
+@import './scss/buttons';
 
 * {
   box-sizing: border-box;
