@@ -27,7 +27,6 @@ export class Home implements OnInit {
   constructor(private readonly novify: Novify) {}
 
   ngOnInit(): void {
-    console.log('Home ngOnInit ejecutado');
     // Carga inicial de datos del servidor para mostrar el estado general de Navidrome.
     this.loadServerInfo();
     // Muestra lo que está sonando en ese momento.

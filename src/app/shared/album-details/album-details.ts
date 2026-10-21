@@ -64,7 +64,6 @@ export class AlbumDetails implements OnChanges {
           ...song,
         }));
 
-        console.warn(this.songs)
         this.cdr.detectChanges();
       },
       error: () => {
@@ -89,9 +88,6 @@ export class AlbumDetails implements OnChanges {
 
     this.state = this.audioService.getCurrentState();
     this.cdr.detectChanges();
-    console.log('Current state:', this.state);
-
-
 
   }
 }
