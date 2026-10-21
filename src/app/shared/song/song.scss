@@ -33,11 +33,11 @@
     button.col-play {
         padding: 4px 0;
         border: none;
-        background: rgba(0, 0, 0, 0.233);
+        background: none;
         cursor: pointer;
 
         &:hover {
-            background: rgba(0, 0, 0, 0.5);
+            background: none;
             color: var(--secondary);
         }
     }
