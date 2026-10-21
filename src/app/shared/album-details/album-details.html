@@ -8,8 +8,14 @@
 
             <div class="songList">
                 <div class="song" *ngFor="let song of songs">
-                    
-                    <button class="play" (click)="playSong(song)">{{(audioState$ | async)?.isPlaying && (audioState$ | async)?.currentSong?.id === song.id ? '⏸' : '▶'}}</button>
+
+                    <button class="play" (click)="playSong(song)">
+                        <fa-icon
+                            *ngIf="(audioState$ | async)?.isPlaying && (audioState$ | async)?.currentSong?.id === song.id"
+                            [icon]="faPause" />
+                        <fa-icon
+                            *ngIf="!(audioState$ | async)?.isPlaying || (audioState$ | async)?.currentSong?.id !== song.id"
+                            [icon]="faPlay" /></button>
                     <p class="name">{{song.title}}</p>
                     <p class="duration">{{song.duration}}</p>
                 </div>
@@ -17,6 +23,6 @@
 
         </div>
 
-        
+
     </div>
-</div>
+</div>▶

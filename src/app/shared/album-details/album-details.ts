@@ -1,21 +1,28 @@
-import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Observable } from 'rxjs';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { faPause, faPlay, faStop } from '@fortawesome/free-solid-svg-icons';
 import { Novify } from '../../../services/novify';
 import { AudioService, AudioState } from '../../../services/audio.service';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-album-details',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FaIconComponent],
   templateUrl: './album-details.html',
-  styleUrl: './album-details.scss',
+  styleUrls: ['./album-details.scss'],
 })
 export class AlbumDetails implements OnChanges {
   @Input() album?: any;
   @Input() coverArt?: any;
 
   audioState$: Observable<AudioState>;
+
+  // ICONOS
+  faPlay = faPlay;
+  faPause = faPause;
+  faStop = faStop;
 
 
   @Output() close = new EventEmitter<boolean>();

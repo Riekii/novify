@@ -7,20 +7,19 @@
 
     <div class="controls">
       <button (click)="togglePlayPause()" class="play-btn">
-        {{ state.isPlaying ? '⏸' : '▶' }}
+        <fa-icon
+          *ngIf="(audioState$ | async)?.isPlaying && (audioState$ | async)?.currentSong?.id === state.currentSong?.id"
+          [icon]="faPause" />
+        <fa-icon
+          *ngIf="!(audioState$ | async)?.isPlaying || (audioState$ | async)?.currentSong?.id !== state.currentSong?.id"
+          [icon]="faPlay" />
       </button>
     </div>
 
     <div class="progress-section">
       <span class="time">{{ formatTime(state.currentTime) }}</span>
-      <input
-        type="range"
-        min="0"
-        [max]="state.duration"
-        [value]="state.currentTime"
-        (change)="onProgressChange($event)"
-        class="progress-bar"
-      />
+      <input type="range" min="0" [max]="state.duration" [value]="state.currentTime" (change)="onProgressChange($event)"
+        class="progress-bar" />
       <span class="time">{{ formatTime(state.duration) }}</span>
     </div>
   </div>

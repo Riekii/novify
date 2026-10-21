@@ -78,7 +78,10 @@ div.detail-container {
       }
 
       button.play{
-        padding-right: 4px;
+        padding: 4px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
       }
     }
   }
