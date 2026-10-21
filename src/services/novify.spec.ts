@@ -20,6 +20,6 @@ describe('Novify', () => {
     expect(typeof service.getArtists).toBe('function');
     expect(typeof service.getAlbums).toBe('function');
     expect(typeof service.search).toBe('function');
-    expect(service.buildUrl('/rest/ping')).toContain('http://192.168.1.214:4533/rest/ping');
+    expect(service.buildUrl('/rest/ping')).toContain(`${window.location.origin}/rest/ping`);
   });
 });

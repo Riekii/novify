@@ -6,6 +6,7 @@
   background-color: black;
   border-top: solid 1px var(--line);
   z-index: 1000;
+
 }
 
 .player-card {
@@ -17,6 +18,10 @@
   gap: 15px;
   color: white;
   font-family: Arial, sans-serif;
+
+      @media (max-width: 500px) {
+      min-height: 2000px;
+    }
 }
 
 .song-info {

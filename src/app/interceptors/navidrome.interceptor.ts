@@ -1,6 +1,6 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 
-const NAVIDROME_BASE_URL = 'http://192.168.1.214:4533';
+const NAVIDROME_BASE_URL = window.location.origin === 'http://localhost:4200' ? 'http://192.168.1.214:4533' : window.location.origin+':4533';
 const NAVIDROME_CONFIG = {
   username: 'rieki',
   password: 'peneman21',
@@ -10,11 +10,8 @@ const NAVIDROME_CONFIG = {
 };
 
 export const navidromeInterceptor: HttpInterceptorFn = (req, next) => {
-  if (!req.url.startsWith(NAVIDROME_BASE_URL) || req.params.has('u')) {
-    return next(req);
-  }
 
-  const cloned = req.clone({
+    const cloned = req.clone({
     setParams: {
       u: NAVIDROME_CONFIG.username,
       p: NAVIDROME_CONFIG.password,
@@ -23,6 +20,13 @@ export const navidromeInterceptor: HttpInterceptorFn = (req, next) => {
       f: NAVIDROME_CONFIG.format,
     },
   });
+
+  console.warn(NAVIDROME_BASE_URL, req.url, req.url.startsWith(NAVIDROME_BASE_URL), req.params.has('u'), cloned);
+  if (!req.url.startsWith(NAVIDROME_BASE_URL) || req.params.has('u')) {
+    return next(req);
+  }
+
+
 
   return next(cloned);
 };

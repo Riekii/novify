@@ -8,12 +8,14 @@ export type NavidromeQueryParams = Record<string, string | number | boolean | nu
   providedIn: 'root',
 })
 export class Novify {
-  private readonly baseUrl = 'http://192.168.1.214:4533';
+  // private baseUrl = window.location.origin+':4533';
+  private readonly baseUrl = window.location.origin === 'http://localhost:4200' ? 'http://192.168.1.214:4533' : window.location.origin+':4533';
   private readonly apiBasePath = '/rest';
   private readonly username = 'rieki';
   private readonly password = 'peneman21';
 
-  constructor(private readonly http: HttpClient) { }
+  constructor(private readonly http: HttpClient) {
+  }
 
   buildUrl(path: string): string {
     const normalizedBase = this.baseUrl.endsWith('/') ? this.baseUrl.slice(0, -1) : this.baseUrl;
