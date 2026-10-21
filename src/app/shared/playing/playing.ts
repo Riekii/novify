@@ -1,8 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { CommonModule, DOCUMENT } from '@angular/common';
+import { Title } from '@angular/platform-browser';
 import { AudioService, AudioState } from '../../../services/audio.service';
 import { Novify } from '../../../services/novify';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, distinctUntilChanged, map } from 'rxjs';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { faPause, faPlay, faStop, faForward, faBackward } from '@fortawesome/free-solid-svg-icons';
 
@@ -16,6 +17,9 @@ import { faPause, faPlay, faStop, faForward, faBackward } from '@fortawesome/fre
 export class Playing implements OnInit, OnDestroy {
   audioState$: Observable<AudioState>;
   private endedSub?: Subscription;
+  private songSub?: Subscription;
+  private coverSub?: Subscription;
+  private faviconUrl?: string;
 
   faPlay = faPlay;
   faPause = faPause;
@@ -25,17 +29,64 @@ export class Playing implements OnInit, OnDestroy {
 
   constructor(
     private readonly audioService: AudioService,
-    private readonly novify: Novify
+    private readonly novify: Novify,
+    private readonly titleService: Title,
+    @Inject(DOCUMENT) private readonly document: Document
   ) {
     this.audioState$ = this.audioService.getState();
   }
 
   ngOnInit(): void {
     this.endedSub = this.audioService.onSongEnded().subscribe(() => this.playRandomSong());
+    this.songSub = this.audioState$
+      .pipe(
+        map((state) => state.currentSong),
+        distinctUntilChanged((a, b) => a?.id === b?.id)
+      )
+      .subscribe((song) => this.updatePageInfo(song));
   }
 
   ngOnDestroy(): void {
     this.endedSub?.unsubscribe();
+    this.songSub?.unsubscribe();
+    this.coverSub?.unsubscribe();
+    this.revokeFavicon();
+  }
+
+  private updatePageInfo(song: any): void {
+    this.coverSub?.unsubscribe();
+    if (!song) {
+      return;
+    }
+
+    this.titleService.setTitle(song.artist ? `${song.title} - ${song.artist}` : song.title);
+
+    const coverId = song.coverArt ?? song.albumId ?? song.id;
+    this.coverSub = this.novify.getCoverArt(coverId, 64).subscribe({
+      next: (blob) => this.setFavicon(blob),
+      error: () => console.error('No se pudo cargar la carátula para el favicon.'),
+    });
+  }
+
+  private setFavicon(blob: Blob): void {
+    this.revokeFavicon();
+    this.faviconUrl = URL.createObjectURL(blob);
+
+    let link = this.document.querySelector<HTMLLinkElement>('link[rel~="icon"]');
+    if (!link) {
+      link = this.document.createElement('link');
+      link.rel = 'icon';
+      this.document.head.appendChild(link);
+    }
+    link.type = blob.type || 'image/jpeg';
+    link.href = this.faviconUrl;
+  }
+
+  private revokeFavicon(): void {
+    if (this.faviconUrl) {
+      URL.revokeObjectURL(this.faviconUrl);
+      this.faviconUrl = undefined;
+    }
   }
 
   public playRandomSong(): void {
