@@ -18,6 +18,7 @@ export class Playing implements OnInit, OnDestroy {
   audioState$: Observable<AudioState>;
   private endedSub?: Subscription;
   private songSub?: Subscription;
+  private stateSub?: Subscription;
   private coverSub?: Subscription;
   private faviconUrl?: string;
 
@@ -44,11 +45,14 @@ export class Playing implements OnInit, OnDestroy {
         distinctUntilChanged((a, b) => a?.id === b?.id)
       )
       .subscribe((song) => this.updatePageInfo(song));
+    this.stateSub = this.audioState$.subscribe((state) => this.updatePlaybackState(state));
+    this.registerMediaActions();
   }
 
   ngOnDestroy(): void {
     this.endedSub?.unsubscribe();
     this.songSub?.unsubscribe();
+    this.stateSub?.unsubscribe();
     this.coverSub?.unsubscribe();
     this.revokeFavicon();
   }
@@ -60,11 +64,77 @@ export class Playing implements OnInit, OnDestroy {
     }
 
     this.titleService.setTitle(song.artist ? `${song.title} - ${song.artist}` : song.title);
+    this.setMediaMetadata(song);
 
     const coverId = song.coverArt ?? song.albumId ?? song.id;
-    this.coverSub = this.novify.getCoverArt(coverId, 64).subscribe({
-      next: (blob) => this.setFavicon(blob),
-      error: () => console.error('No se pudo cargar la carátula para el favicon.'),
+    this.coverSub = this.novify.getCoverArt(coverId, 512).subscribe({
+      next: (blob) => {
+        this.setFavicon(blob);
+        this.setMediaMetadata(song, blob);
+      },
+      error: () => console.error('No se pudo cargar la carátula.'),
+    });
+  }
+
+  // Alimenta la pantalla de bloqueo, el Centro de control del iPhone y el Apple Watch.
+  private setMediaMetadata(song: any, cover?: Blob): void {
+    if (!('mediaSession' in navigator)) {
+      return;
+    }
+
+    const base = { title: song.title, artist: song.artist ?? '', album: song.album ?? '' };
+    if (!cover) {
+      navigator.mediaSession.metadata = new MediaMetadata(base);
+      return;
+    }
+
+    // Una URL de datos es más fiable en Safari que una URL blob.
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (this.audioService.getCurrentState().currentSong?.id !== song.id) {
+        return;
+      }
+      navigator.mediaSession.metadata = new MediaMetadata({
+        ...base,
+        artwork: [{ src: reader.result as string, sizes: '512x512', type: cover.type || 'image/jpeg' }],
+      });
+    };
+    reader.readAsDataURL(cover);
+  }
+
+  private updatePlaybackState(state: AudioState): void {
+    if (!('mediaSession' in navigator)) {
+      return;
+    }
+
+    navigator.mediaSession.playbackState = !state.currentSong ? 'none' : state.isPlaying ? 'playing' : 'paused';
+
+    if (state.duration > 0 && isFinite(state.duration)) {
+      try {
+        navigator.mediaSession.setPositionState({
+          duration: state.duration,
+          position: Math.min(state.currentTime, state.duration),
+          playbackRate: 1,
+        });
+      } catch {
+        // Algunos navegadores rechazan valores transitorios.
+      }
+    }
+  }
+
+  private registerMediaActions(): void {
+    if (!('mediaSession' in navigator)) {
+      return;
+    }
+
+    const session = navigator.mediaSession;
+    session.setActionHandler('play', () => this.audioService.resume());
+    session.setActionHandler('pause', () => this.audioService.pause());
+    session.setActionHandler('nexttrack', () => this.playRandomSong());
+    session.setActionHandler('seekto', (details) => {
+      if (details.seekTime !== undefined) {
+        this.audioService.setTime(details.seekTime);
+      }
     });
   }
 
