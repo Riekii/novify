@@ -1,7 +1,8 @@
 import { UpperCasePipe } from '@angular/common';
-import { Component, computed, input, output, signal } from '@angular/core';
+import { Component, computed, inject, input, output, signal } from '@angular/core';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { faPause, faPlay, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faDownload, faPause, faPlay, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { Novify } from '../../../services/novify';
 
 @Component({
   selector: 'app-song',
@@ -11,6 +12,8 @@ import { faPause, faPlay, faPlus } from '@fortawesome/free-solid-svg-icons';
   styleUrl: './song.scss',
 })
 export class Song {
+  private readonly novify = inject(Novify);
+
   song = input<any>();
   isCurrent = input(false);
   isPlaying = input(false);
@@ -27,6 +30,12 @@ export class Song {
   faPlay = faPlay;
   faPause = faPause;
   faPlus = faPlus;
+  faDownload = faDownload;
+
+  downloadUrl = computed(() => {
+    const id = this.song()?.id;
+    return id ? this.novify.getDownloadUrl(id) : '';
+  });
 
   progress = computed(() => {
     if (!this.isCurrent()) {

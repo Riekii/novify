@@ -126,6 +126,17 @@ export class Novify {
     return `${this.buildUrl('/rest/stream')}?${query}`;
   }
 
+  getDownloadUrl(id: string): string {
+    const query = new URLSearchParams({
+      id,
+      u: this.username,
+      p: this.password,
+      c: 'novify',
+      v: '1.16.1',
+    }).toString();
+    return `${this.buildUrl('/rest/download')}?${query}`;
+  }
+
   getCoverArt(
     id: string,
     size = 300

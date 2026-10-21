@@ -12,6 +12,9 @@
             @if (s.size) { · {{ formatSize(s.size) }} }
         </span>
         <span class="col-duration">{{ formatDuration(s.duration) }}</span>
+        <a class="col-download" [href]="downloadUrl()" download title="Descargar" aria-label="Descargar">
+            <fa-icon [icon]="faDownload" />
+        </a>
         @if (playlists().length) {
             <div class="col-add">
                 <button type="button" class="add" title="Añadir a playlist" (click)="menuOpen.set(!menuOpen())">
