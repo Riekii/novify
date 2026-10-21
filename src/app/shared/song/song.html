@@ -5,7 +5,7 @@
         </button>
         <span class="col-title" [title]="s.title">{{ s.title }}</span>
         <span class="col-artist" [title]="s.artist">{{ s.artist }}</span>
-        <span class="col-album" *ngIf="!isMobile()" [title]="s.album">{{ s.album }}</span>
+        <span class="col-album" [title]="s.album">{{ s.album }}</span>
         <span class="col-format">
             {{ s.suffix | uppercase }}
             @if (s.bitRate) { · {{ s.bitRate }} kbps }

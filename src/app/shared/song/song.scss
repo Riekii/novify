@@ -12,6 +12,7 @@
     box-sizing: border-box;
     border: solid 1px var(--line);
     border-top: none;
+    transition: 0.2s all ease-in-out;
     background: linear-gradient(to right, rgba(29, 185, 84, 0.45) var(--progress, 0%), transparent var(--progress, 0%));
 
     &.active {
@@ -41,19 +42,25 @@
     }
 
     @media (max-width: 768px) {
-        grid-template-columns: 44px minmax(0, 1fr) 50px;
+        grid-template-columns: 44px minmax(0, 1fr) minmax(0, 1fr) auto;
         grid-template-areas:
-            'play title duration'
-            'play artist duration'
-            'play album duration'
-            'play format duration';
+            'play title title duration'
+            'play artist album duration'
+            'play format format duration';
+        column-gap: 10px;
         row-gap: 2px;
+        padding: 8px;
 
-        .col-play { grid-area: play; }
-        .col-title { grid-area: title; }
-        .col-artist { grid-area: artist; font-size: 0.85em; }
-        .col-album { grid-area: album; font-size: 0.85em; }
-        .col-format { grid-area: format; font-size: 0.75em; }
-        .col-duration { grid-area: duration; }
+        .col-play {
+            grid-area: play;
+            align-self: stretch;
+            min-height: 44px;
+            font-size: 1.1em;
+        }
+        .col-title { grid-area: title; font-weight: bold; }
+        .col-artist { grid-area: artist; font-size: 0.85em; opacity: 0.85; }
+        .col-album { grid-area: album; font-size: 0.85em; opacity: 0.85; text-align: right; }
+        .col-format { grid-area: format; font-size: 0.7em; opacity: 0.6; }
+        .col-duration { grid-area: duration; align-self: center; font-size: 0.85em; }
     }
 }
